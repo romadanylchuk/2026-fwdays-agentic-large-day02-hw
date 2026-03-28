@@ -1,0 +1,30 @@
+---
+description: "Code conventions for Excalidraw components and utilities"
+globs: packages/**/*.ts,packages/**/*.tsx
+alwaysApply: false
+---
+
+# Code Conventions
+
+## Components
+
+- Functional components + hooks ONLY (no class components)
+- Props interface: `{ComponentName}Props`
+- Named exports only (no default exports)
+- Colocated tests: `ComponentName.test.tsx`
+
+## TypeScript
+
+- Strict mode — no `any`, no `@ts-ignore`
+- Prefer `type` over `interface` for simple types
+- Import types: `import type { X } from "..."`
+
+## Files
+
+- kebab-case for files: `element-utils.ts`
+- PascalCase for components: `LayerUI.tsx`
+
+## How to verify
+
+- Run `yarn test:typecheck` and ESLint on touched files (`yarn test:all` or project lint command as in `docs/memory/techContext.md`).
+- Confirm new components use named exports, functional components with hooks, and no new `@ts-ignore` or unnecessary `any`.

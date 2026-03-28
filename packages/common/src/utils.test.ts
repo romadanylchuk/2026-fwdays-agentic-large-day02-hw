@@ -6,11 +6,19 @@ import {
 import { vi } from "vitest";
 
 // Import directly to avoid the @excalidraw/common throttleRAF mock from setupTests.ts.
-import { throttleRAF } from "./utils";
+import { easeOut, throttleRAF } from "./utils";
 
 type RafCallback = FrameRequestCallback;
 
 describe("@excalidraw/common/utils", () => {
+  describe("easeOut()", () => {
+    it("should map progress in [0, 1] with quartic ease-out (1 - (1-k)^4)", () => {
+      expect(easeOut(0)).toBe(0);
+      expect(easeOut(1)).toBe(1);
+      expect(easeOut(0.5)).toBeCloseTo(1 - 0.5 ** 4, 10);
+    });
+  });
+
   describe("isTransparent()", () => {
     it("should return true when color is rgb transparent", () => {
       expect(isTransparent("#ff00")).toEqual(true);

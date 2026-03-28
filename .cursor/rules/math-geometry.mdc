@@ -1,0 +1,29 @@
+---
+description: "Math and geometry types — use @excalidraw/math types in math and element"
+globs: packages/math/**,packages/element/**
+alwaysApply: false
+---
+
+# Math and geometry
+
+## Source of truth
+
+- Geometry types live in **`packages/math/src/types.ts`**. Prefer these over ad-hoc shapes for new code:
+  - Points: `GlobalPoint`, `LocalPoint` (tuple points); legacy `GlobalCoord` / `LocalCoord` (`{ x, y }`) exist — follow surrounding file conventions when editing existing code, but prefer tuple point types for new APIs.
+  - Vectors: `Vector`; lines: `Line`, `LineSegment`; polygons: `Polygon`, `Rectangle`, etc.
+
+## Imports
+
+- Import from `@excalidraw/math` (or package-local paths consistent with the repo) — do not duplicate branded math types in `element` or redefine `{ x: number; y: number }` when a `GlobalPoint` / `LocalPoint` is appropriate.
+
+## Layering
+
+- **`packages/math`** stays pure: no React, no `@excalidraw/element` or `@excalidraw/excalidraw` imports.
+- **`packages/element`** may depend on `@excalidraw/math` and `@excalidraw/common`; keep geometric algorithms aligned with types from `math`.
+
+See also `package-boundaries.mdc`.
+
+## How to verify
+
+- Run `yarn test:typecheck`; ensure `packages/math` has no imports from React, `@excalidraw/element`, or `@excalidraw/excalidraw`.
+- In `packages/element` and `packages/math`, new geometry APIs should use types from `@excalidraw/math` / `packages/math/src/types.ts` rather than ad-hoc duplicates.

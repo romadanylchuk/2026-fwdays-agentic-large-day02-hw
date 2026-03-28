@@ -1,0 +1,32 @@
+---
+description: "Vitest tests — snapshots, aliases, and coverage"
+globs: "**/*.test.ts,**/*.test.tsx,**/*.spec.ts,**/*.spec.tsx"
+alwaysApply: false
+---
+
+# Testing
+
+## Runner and environment
+
+- Tests use **Vitest** with **jsdom** and root **`setupFiles`** / **`vitest.config.mts`** (see `docs/memory/techContext.md`).
+- Use **`@excalidraw/*` path aliases** the same way as app code — do not bypass aliases with deep relative paths into `packages/` unless matching an existing test pattern.
+
+## Snapshots
+
+- Update snapshots only when the visual or serialized behavior change is intentional.
+- Use **`yarn test:update`** (or the project’s documented test command) from the repo root after deliberate snapshot changes; do not commit flaky snapshot churn.
+
+## Coverage and config
+
+- Do not lower **`coverage.thresholds`** in `vitest.config.mts` without an explicit reason and review.
+- Prefer fixing tests or code over disabling suites unless the skip is documented.
+
+## Style
+
+- Colocate tests as **`ComponentName.test.tsx`** next to components when that matches nearby files.
+- Follow existing matchers and helpers from **`setupTests.ts`** and Testing Library usage in sibling tests.
+
+## How to verify
+
+- From the repo root, run `yarn test:update` (or `yarn test:all` per `docs/memory/techContext.md`) before committing; snapshot diffs should match intentional behavior changes only.
+- Confirm `vitest.config.mts` coverage thresholds and suite skips were not weakened without review.

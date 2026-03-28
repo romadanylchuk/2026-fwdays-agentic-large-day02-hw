@@ -1,0 +1,33 @@
+---
+description: "Security and validation for scene data, restore, and file format code"
+globs: packages/excalidraw/data/**
+alwaysApply: false
+---
+
+# Data and restore security
+
+## Untrusted input
+
+- Files and JSON passed into restore / migration / import paths must be treated as hostile: validate shapes, types, and allowed value ranges before use.
+- Reject or clamp oversized payloads (element counts, string lengths, nesting) where the codebase supports it; prefer failing closed for clearly invalid data.
+
+## No code execution from data
+
+- Never `eval`, `new Function`, or dynamic `import()` based on values from saved files or API responses in this layer.
+
+## Compatibility vs safety
+
+- Preserve backward compatibility with existing `.excalidraw` formats, but do not relax validation solely to accept malformed data; fix forward with explicit migration steps when needed.
+
+## Protected files
+
+- Changes to critical paths (e.g. `restore.ts` per project rules) require full test runs and careful review — see `.cursor/rules/do-not-touch.mdc`.
+
+## Logging
+
+- Do not log full user documents or PII by default in restore/debug paths.
+
+## How to verify
+
+- Grep `packages/excalidraw/data` for `eval`, `new Function`, and dynamic `import(` driven by parsed file content; there should be none.
+- Run `yarn test:update` (or the full suite) after changing restore/migration/import paths; exercise import/restore flows manually when validation logic changes.

@@ -1,0 +1,38 @@
+---
+description: "Security expectations for excalidraw-app (env, collab, PWA, analytics)"
+globs: excalidraw-app/**
+alwaysApply: false
+---
+
+# excalidraw-app security
+
+## Environment and secrets
+
+- Read sensitive values only from `import.meta.env` / build-time env as documented in `docs/technical/dev-setup.md`. Never hardcode production keys in source.
+- Ensure `.env` files with secrets stay out of git (verify `.gitignore` when adding new env file names).
+
+## Collaboration and realtime
+
+- Treat room IDs, session payloads, and socket messages as untrusted until validated. Do not execute code or inject HTML based on peer messages without sanitization.
+- Do not send authentication material to untrusted origins; align with existing collab and Firebase configuration.
+
+## Service worker and PWA
+
+- Changes to `registerSW` / service worker caching: avoid caching sensitive authenticated responses unless that behavior is explicitly intended and safe.
+
+## Analytics and errors (e.g. Sentry)
+
+- Scrub or avoid attaching secrets, tokens, or full document payloads to error reports when not necessary.
+
+## Vite / HTML entry
+
+- Avoid injecting arbitrary scripts or inline handlers from user-controlled or remote config. Keep script sources explicit and trusted.
+
+## Third-party scripts
+
+- Adding analytics, chat widgets, or external scripts requires explicit review (CSP, data leakage, subresource integrity where applicable).
+
+## How to verify
+
+- Confirm secrets and env-specific values come from `import.meta.env` / documented env as in `docs/technical/dev-setup.md`, not hardcoded in `excalidraw-app`.
+- Review collab/socket and Firebase-related code for validation of untrusted payloads; after changes, run app build and smoke-test collab if applicable.

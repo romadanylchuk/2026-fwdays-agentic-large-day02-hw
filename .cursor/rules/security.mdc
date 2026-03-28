@@ -1,0 +1,48 @@
+---
+description: "Security baseline for the Excalidraw monorepo (XSS, URLs, secrets, deps)"
+alwaysApply: true
+---
+
+# Security
+
+Apply these expectations when adding or changing code anywhere in the repo.
+
+## XSS and untrusted content
+
+- Avoid `dangerouslySetInnerHTML` and raw HTML strings for user-controlled or file-loaded content unless there is an explicit, reviewed sanitization path.
+- Treat text labels, imported documents, and pasted content as untrusted; prefer rendering as plain text or existing safe pipelines (not arbitrary HTML/SVG script vectors).
+
+## URLs and navigation
+
+- Do not open external URLs from unvalidated strings. Reject or normalize dangerous schemes (`javascript:`, `data:` where inappropriate).
+- For `window.open` / `<a target="_blank">`, use `rel="noopener noreferrer"` (or equivalent) where applicable.
+
+## Files, clipboard, and JSON
+
+- `.excalidraw` / scene JSON / import paths: validate structure, cap size and depth where practical; never execute code embedded in data.
+- Clipboard paste: do not treat pasted HTML/XML as safe without the same guarantees as the rest of the app.
+
+## Secrets and configuration
+
+- Do not commit API keys, tokens, or private endpoints. Use environment variables and CI secrets (Firebase, Sentry, collab backends, etc.).
+- Do not log secrets, session tokens, or unnecessary PII in client-side logs or analytics.
+
+## Dependencies and supply chain
+
+- No new npm packages without explicit approval (see architecture rules). Prefer audited, maintained dependencies for security-sensitive code paths.
+
+## Realtime and backends
+
+- Do not trust messages from Socket.io / Firebase / other network channels without validation and expected auth/session rules aligned with the backend design.
+
+## Infrastructure (when touching Docker / nginx / HTML entry)
+
+- Prefer secure defaults: tight CSP where feasible, sensible `Referrer-Policy`, avoid framing clickjacking unless intentionally allowed (`X-Frame-Options` / `frame-ancestors`).
+- Do not expose extra ports or debug endpoints in production-oriented configs without an explicit reason.
+
+For data loading and restore specifics, see `security-data-restore.mdc`. For the app shell (env, collab, PWA), see `security-excalidraw-app.mdc`.
+
+## How to verify
+
+- Review changes for `dangerouslySetInnerHTML`, raw HTML from user/file data, unvalidated URLs, and missing `rel="noopener noreferrer"` on `target="_blank"` links.
+- Grep for accidental secret patterns (API keys, tokens in source) and ensure new dependencies were explicitly approved; run tests after security-sensitive edits.

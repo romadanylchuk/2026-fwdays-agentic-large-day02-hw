@@ -1,0 +1,35 @@
+---
+description: Use the docs/ memory bank before planning or changing code
+alwaysApply: true
+---
+
+# Memory bank (`docs/`)
+
+The `docs/` directory is the project **memory bank**. Read relevant files **before** making substantive changes, not only when unsure.
+
+**Start here:** `docs/memory/activeContext.md` → then open the files that match your task.
+
+| Path | Use for |
+|------|---------|
+| `docs/memory/projectbrief.md` | Scope, artifacts, constraints |
+| `docs/memory/activeContext.md` | Current focus / branch / task |
+| `docs/memory/progress.md` | What exists, tests |
+| `docs/memory/productContext.md` | UX, scenarios, product constraints |
+| `docs/memory/techContext.md` | Stack, commands, Docker |
+| `docs/memory/systemPatterns.md` | Architecture patterns, state, actions |
+| `docs/memory/decisionLog.md` | Recorded decisions |
+| `docs/product/PRD.md` | Product requirements |
+| `docs/product/domain-glossary.md` | Domain terms (Scene, Element, Action, …) |
+| `docs/technical/architecture.md` | Layers, rendering, builds |
+| `docs/technical/dev-setup.md` | Onboarding, env, IDE |
+
+If memory bank content conflicts with code, **verify in code** and note gaps rather than guessing.
+
+## Updating the memory bank
+
+When the user asks to update, sync, or refresh Memory Bank docs after code or architecture changes, follow the **memory-bank-update** skill: `.cursor/skills/mamory-bank-update/SKILL.md`.
+
+## How to verify
+
+- For substantive edits, confirm `docs/memory/activeContext.md` was consulted (and other task-relevant `docs/memory/*` or `docs/technical/*` files as needed).
+- After syncing docs with code, follow `.cursor/skills/mamory-bank-update/SKILL.md` and spot-check that `docs/memory/*.md` matches the current codebase where claims are factual.

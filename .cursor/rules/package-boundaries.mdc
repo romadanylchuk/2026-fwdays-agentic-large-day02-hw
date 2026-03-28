@@ -1,0 +1,33 @@
+---
+description: "Internal package dependency direction for @excalidraw/* workspaces"
+globs: packages/**
+alwaysApply: false
+---
+
+# Package boundaries
+
+Declared dependencies in each package `package.json` define the allowed direction of imports.
+
+## Intended flow (low → high level)
+
+1. **`@excalidraw/common`** — shared constants/utilities; depends only on non-workspace deps (e.g. `tinycolor2`). Must **not** import `@excalidraw/math`, `@excalidraw/element`, or `@excalidraw/excalidraw`.
+
+2. **`@excalidraw/math`** — depends on `@excalidraw/common` only. Must **not** import `@excalidraw/element` or `@excalidraw/excalidraw`.
+
+3. **`@excalidraw/element`** — depends on `@excalidraw/common` and `@excalidraw/math`. Must **not** import `@excalidraw/excalidraw`.
+
+4. **`@excalidraw/utils`** — workspace package with **no** `@excalidraw/*` runtime dependencies in `package.json`. Avoid introducing imports from `element` / `math` / `excalidraw` into `utils` unless the monorepo explicitly adds that dependency (requires review).
+
+5. **`@excalidraw/excalidraw`** — may consume `common`, `math`, `element` (and other declared deps). The editor package sits above the model/math layers.
+
+## When adding imports
+
+- Prefer existing public entry points (`@excalidraw/<pkg>`) and patterns already used in the same directory.
+- If a new cross-package import would reverse the flow above, refactor or extend a lower layer instead of coupling upward.
+
+Full map: `docs/technical/architecture.md` and `docs/memory/systemPatterns.md`.
+
+## How to verify
+
+- For each new cross-package import, check the target package’s `package.json` lists that workspace dependency; the import direction must match the flow above.
+- Run `yarn test:typecheck` after changing package boundaries or `package.json` files.

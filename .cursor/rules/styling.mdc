@@ -1,0 +1,30 @@
+---
+description: "SCSS and styles — colocated sheets, variables, theme"
+globs: packages/excalidraw/**/*.scss,excalidraw-app/**/*.scss,examples/**/*.scss
+alwaysApply: false
+---
+
+# Styling (SCSS)
+
+## Colocation
+
+- Component styles use **colocated `*.scss`** files imported from the sibling `.tsx` (e.g. `import "./Foo.scss"`). Prefer that pattern over unrelated global files when adding or splitting styles.
+
+## CSS modules
+
+- **`*.module.scss`** is used where the build should scope class names (e.g. **`packages/excalidraw/css/variables.module.scss`**). Use **`@use ".../variables.module.scss" as *`** (or the established pattern in neighboring `.scss`) when you need shared tokens — do not copy variable values inline.
+
+## Global / entry styles
+
+- App-wide or entry bundles (e.g. **`excalidraw-app/index.scss`**, **`packages/excalidraw/css/app.scss`**) are for layout and imports that truly span the shell. Avoid dumping feature-specific rules there when a colocated sheet fits.
+
+## Conventions
+
+- Match **naming and structure** of sibling components in the same folder (BEM-like or existing class naming in that file).
+- Prefer **theme/CSS variables** from the shared pipeline over hard-coded colors when the file already uses them.
+- Do not introduce a second styling system (e.g. CSS-in-JS libraries) for editor UI — stay on **SCSS** consistent with the package.
+
+## How to verify
+
+- New or moved styles should use colocated `*.scss` (or existing `*.module.scss` / entry patterns); no new CSS-in-JS dependencies for editor UI.
+- Run `yarn build` after changing shared SCSS entry points or variables; visually spot-check affected UI in the dev server if layout tokens changed.
