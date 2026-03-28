@@ -32,6 +32,10 @@ alwaysApply: false
 
 - Adding analytics, chat widgets, or external scripts requires explicit review (CSP, data leakage, subresource integrity where applicable).
 
+## Disclose in chat
+
+When this rule materially guides your response or edits, state in the Cursor chat that you applied it — mention `.cursor/rules/security-excalidraw-app.mdc` (one short line is enough).
+
 ## How to verify
 
 - Confirm secrets and env-specific values come from `import.meta.env` / documented env as in `docs/technical/dev-setup.md`, not hardcoded in `excalidraw-app`.

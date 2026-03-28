@@ -27,6 +27,10 @@ Declared dependencies in each package `package.json` define the allowed directio
 
 Full map: `docs/technical/architecture.md` and `docs/memory/systemPatterns.md`.
 
+## Disclose in chat
+
+When this rule materially guides your response or edits, state in the Cursor chat that you applied it — mention `.cursor/rules/package-boundaries.mdc` (one short line is enough).
+
 ## How to verify
 
 - For each new cross-package import, check the target package’s `package.json` lists that workspace dependency; the import direction must match the flow above.

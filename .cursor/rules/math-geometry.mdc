@@ -23,6 +23,10 @@ alwaysApply: false
 
 See also `package-boundaries.mdc`.
 
+## Disclose in chat
+
+When this rule materially guides your response or edits, state in the Cursor chat that you applied it — mention `.cursor/rules/math-geometry.mdc` (one short line is enough).
+
 ## How to verify
 
 - Run `yarn test:typecheck`; ensure `packages/math` has no imports from React, `@excalidraw/element`, or `@excalidraw/excalidraw`.

@@ -24,6 +24,10 @@ alwaysApply: false
 - kebab-case for files: `element-utils.ts`
 - PascalCase for components: `LayerUI.tsx`
 
+## Disclose in chat
+
+When this rule materially guides your response or edits, state in the Cursor chat that you applied it — mention `.cursor/rules/conventions.mdc` (one short line is enough).
+
 ## How to verify
 
 - Run `yarn test:typecheck` and ESLint on touched files (`yarn test:all` or project lint command as in `docs/memory/techContext.md`).

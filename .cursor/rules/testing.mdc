@@ -26,6 +26,10 @@ alwaysApply: false
 - Colocate tests as **`ComponentName.test.tsx`** next to components when that matches nearby files.
 - Follow existing matchers and helpers from **`setupTests.ts`** and Testing Library usage in sibling tests.
 
+## Disclose in chat
+
+When this rule materially guides your response or edits, state in the Cursor chat that you applied it — mention `.cursor/rules/testing.mdc` (one short line is enough).
+
 ## How to verify
 
 - From the repo root, run `yarn test:update` (or `yarn test:all` per `docs/memory/techContext.md`) before committing; snapshot diffs should match intentional behavior changes only.

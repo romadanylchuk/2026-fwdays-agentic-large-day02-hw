@@ -29,6 +29,10 @@ If memory bank content conflicts with code, **verify in code** and note gaps rat
 
 When the user asks to update, sync, or refresh Memory Bank docs after code or architecture changes, follow the **memory-bank-update** skill: `.cursor/skills/mamory-bank-update/SKILL.md`.
 
+## Disclose in chat
+
+When this rule materially guides your response or edits, state in the Cursor chat that you applied it — mention `.cursor/rules/memory-bank.mdc` (one short line is enough).
+
 ## How to verify
 
 - For substantive edits, confirm `docs/memory/activeContext.md` was consulted (and other task-relevant `docs/memory/*` or `docs/technical/*` files as needed).

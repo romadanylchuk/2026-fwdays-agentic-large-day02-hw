@@ -19,6 +19,10 @@ Changes to protected files require:
 2. Running complete test suite
 3. Manual QA verification
 
+## Disclose in chat
+
+When this rule materially guides your response or edits, state in the Cursor chat that you applied it — mention `.cursor/rules/do-not-touch.mdc` (one short line is enough).
+
 ## How to verify
 
 - Before merge, confirm diffs do not touch the listed paths without explicit approval; if they do, confirm the full test suite (e.g. `yarn test:update`) was run and manual QA is documented.

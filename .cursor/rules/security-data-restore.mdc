@@ -27,6 +27,10 @@ alwaysApply: false
 
 - Do not log full user documents or PII by default in restore/debug paths.
 
+## Disclose in chat
+
+When this rule materially guides your response or edits, state in the Cursor chat that you applied it — mention `.cursor/rules/security-data-restore.mdc` (one short line is enough).
+
 ## How to verify
 
 - Grep `packages/excalidraw/data` for `eval`, `new Function`, and dynamic `import(` driven by parsed file content; there should be none.
