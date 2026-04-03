@@ -1,8 +1,9 @@
 ---
+description: "Use Context7 MCP for up-to-date library docs when working on Excalidraw dependencies (React, Vite, Vitest, Radix, etc.)"
 alwaysApply: true
 ---
 
-Use Context7 MCP to fetch current documentation whenever the user asks about a library, framework, SDK, API, CLI tool, or cloud service -- even well-known ones like React, Next.js, Prisma, Express, Tailwind, Django, or Spring Boot. This includes API syntax, configuration, version migration, library-specific debugging, setup instructions, and CLI tool usage. Use even when you think you know the answer -- your training data may not reflect recent changes. Prefer this over web search for library docs.
+When working on Excalidraw and the task involves a library, framework, SDK, or API used by this project (React, Vite, Vitest, Radix UI, esbuild, Firebase, Socket.io, etc.), use the Context7 MCP to fetch current documentation — even for well-known libraries. This covers API syntax, configuration, version migration, library-specific debugging, setup instructions, and CLI tool usage. Prefer this over web search because training data may not reflect recent changes.
 
 Do not use for: refactoring, writing scripts from scratch, debugging business logic, code review, or general programming concepts.
 
@@ -16,3 +17,8 @@ Do not use for: refactoring, writing scripts from scratch, debugging business lo
 ## Disclose in chat
 
 When this rule materially guides your response or edits, state in the Cursor chat that you applied it — mention `.cursor/rules/context7.mdc` (one short line is enough).
+
+## How to verify
+
+- Confirm Context7 was consulted (not just training data) when a response relies on third-party library API details relevant to Excalidraw's stack.
+- Check that the fetched docs match the library version used in the project (`package.json` → dependency version).

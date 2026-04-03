@@ -12,8 +12,7 @@ description: Reference codebase for 2026 Fwdays Agentic Large Day02 Hw. Use this
 Use this skill when you need to:
 - Understand project structure and file organization
 - Find where specific functionality is implemented
-- Read source code for any file
-- Search for code patterns or keywords
+- Identify the tech stack and dependencies
 
 ## Files
 
@@ -21,7 +20,6 @@ Use this skill when you need to:
 |------|----------|
 | `references/summary.md` | **Start here** - Purpose, format explanation, and statistics |
 | `references/project-structure.md` | Directory tree with line counts per file |
-| `references/files.md` | All file contents (search with `## File: <path>`) |
 | `references/tech-stack.md` | Languages, frameworks, and dependencies |
 
 ## How to Use
@@ -39,38 +37,15 @@ src/
 
 ### 2. Read file contents
 
-Grep in `files.md` for the file path:
-
-```
-## File: src/utils/helpers.ts
-```
+Use standard tools (Read, Grep, Glob) to read actual source files in the workspace — do not rely on a bundled snapshot.
 
 ### 3. Search for code
 
-Grep in `files.md` for keywords:
-
-```
-function calculateTotal
-```
-
-## Common Use Cases
-
-**Understand a feature:**
-1. Search `project-structure.md` for related file names
-2. Read the main implementation file in `files.md`
-3. Search for imports/references to trace dependencies
-
-**Debug an error:**
-1. Grep the error message or class name in `files.md`
-2. Check line counts in `project-structure.md` to find large files
-
-**Find all usages:**
-1. Grep function or variable name in `files.md`
+Use Grep or SemanticSearch to find code patterns across the codebase.
 
 ## Tips
 
 - Use line counts in `project-structure.md` to estimate file complexity
-- Search `## File:` pattern to jump between files
 - Check `summary.md` for excluded files, format details, and file statistics
 - Check `tech-stack.md` for languages, frameworks, and dependencies
 

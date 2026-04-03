@@ -14,9 +14,10 @@ This skill contains the following reference files:
 | File | Contents |
 |------|----------|
 | `project-structure.md` | Directory tree with line counts per file |
-| `files.md` | All file contents (search with `## File: <path>`) |
 | `tech-stack.md` | Languages, frameworks, and dependencies |
 | `summary.md` | This file - purpose and format explanation |
+
+> **Note:** Full file contents are not bundled. Use standard workspace tools (Read, Grep, Glob) to access source files directly.
 
 ## Usage Guidelines
 
