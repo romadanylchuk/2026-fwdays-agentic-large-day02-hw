@@ -1,0 +1,97 @@
+# Excalidraw — Cursor Rules (legacy format)
+
+This file consolidates project rules for Cursor. The canonical source is `.cursor/rules/*.mdc`.
+
+## Memory Bank
+
+Read `docs/memory/activeContext.md` before substantive changes, then consult task-relevant files in `docs/memory/`, `docs/product/`, and `docs/technical/`.
+
+## Protected Files
+
+NEVER modify without explicit approval:
+
+- `packages/excalidraw/scene/renderer.ts` — render pipeline
+- `packages/excalidraw/data/restore.ts` — file format compat
+- `packages/excalidraw/actions/manager.ts` — action system
+- `packages/excalidraw/types.ts` — core types
+
+## Architecture
+
+- Custom state via actionManager — NOT Redux/Zustand/MobX
+- Canvas 2D rendering — NOT React DOM for drawing; no react-konva, fabric.js, pixi.js
+- No new npm packages without explicit approval
+
+## Package Boundaries (low → high)
+
+1. `@excalidraw/common` — no workspace deps
+2. `@excalidraw/math` — depends on common only
+3. `@excalidraw/element` — depends on common + math
+4. `@excalidraw/utils` — no `@excalidraw/*` runtime deps
+5. `@excalidraw/excalidraw` — may consume common, math, element
+
+Never reverse the dependency flow without review.
+
+## Code Conventions
+
+- Functional components + hooks only (no class components)
+- Props interface: `{ComponentName}Props`; named exports only
+- Strict TypeScript — no `any`, no `@ts-ignore`
+- Prefer `type` over `interface` for simple types; use `import type` for type-only imports
+- Files: kebab-case (`element-utils.ts`), components: PascalCase (`LayerUI.tsx`)
+
+## Styling (SCSS)
+
+- Colocated `*.scss` next to `.tsx` (`import "./Foo.scss"`)
+- Use `*.module.scss` where build should scope class names; import shared tokens via `@use`
+- Prefer theme/CSS variables over hard-coded colors
+- Do not introduce CSS-in-JS for editor UI — stay on SCSS
+
+## Testing
+
+- Vitest + jsdom; use `@excalidraw/*` path aliases
+- Update snapshots only for intentional changes: `yarn test:update`
+- Do not lower coverage thresholds without review
+- Colocate tests: `ComponentName.test.tsx`
+
+## Math and Geometry
+
+- Geometry types: `packages/math/src/types.ts` — `GlobalPoint`, `LocalPoint`, `Vector`, `Line`, `Polygon`, etc.
+- Import from `@excalidraw/math`; do not duplicate branded types
+- `packages/math` stays pure: no React, no element/excalidraw imports
+
+## Security
+
+- No `dangerouslySetInnerHTML` for user-controlled content without reviewed sanitization
+- Validate URLs; reject `javascript:`, unsafe `data:` schemes; use `rel="noopener noreferrer"` on `target="_blank"`
+- Validate `.excalidraw` / scene JSON structure; never execute code from data files
+- No committed API keys/tokens — use env vars and CI secrets
+- No new npm packages without approval; prefer audited, maintained deps
+- Treat socket/Firebase messages as untrusted; validate before use
+
+### Data and Restore
+
+- Treat files and JSON in restore/import paths as hostile; validate shapes, types, ranges
+- Never `eval`, `new Function`, or dynamic `import()` from saved data
+- Preserve backward compat but do not relax validation for malformed data
+
+### excalidraw-app
+
+- Secrets via `import.meta.env` only; keep `.env` files out of git
+- Scrub secrets from error reports; avoid caching authenticated responses in SW
+- No arbitrary scripts/inline handlers from user-controlled config
+
+## Development Commands
+
+```bash
+yarn start            # Vite dev server
+yarn build            # Production build
+yarn build:packages   # Build common → math → element → excalidraw
+yarn test:typecheck   # TypeScript type checking
+yarn test:update      # Run tests with snapshot updates
+yarn test:all         # typecheck + eslint + prettier + tests
+yarn fix              # Auto-fix formatting and linting
+```
+
+## Context7 MCP
+
+Use Context7 MCP (`resolve-library-id` → `query-docs`) to fetch current library/framework documentation even for well-known libraries. Training data may be outdated.
